@@ -10,14 +10,13 @@ if __name__ == '__main__':
     #     sk = sk.read()
     #     iv = iv.read()
     #     ciphertext = ciphertext.read()
-    #
     #     plaintext = decrypt_aes_cbc(ciphertext=ciphertext,key=sk,iv=iv)
     #     print(plaintext)
 
-    key = b'+\x16r\xdd@\xb9u\\\x9b\xc0\xea!(>\x04x\xf3\xdf}\xb5\xaf\x1egHM\xb1\x8b\xf3\xb5=\r\xb4'
+    with open(f'{config.ROOT_FOLDER}\\data\\mac_key','rb') as mac_key_file:
+        key = mac_key_file.read()
     with open(f'{config.ROOT_FOLDER}\\data\\plaintext','r',encoding='utf8') as file:
         plaintext = file.read()
-    # create_tag(plaintext, key)
     with open(f'{config.ROOT_FOLDER}\\data\\tag','rb') as tag:
         mac_tag = tag.read()
 
