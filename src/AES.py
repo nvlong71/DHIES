@@ -15,6 +15,8 @@ def encrypt_aes_cbc(plaintext: str, key: bytes, iv: bytes):
     padder = padding.PKCS7(AES128.block_size).padder()
     plaintext = padder.update(plaintext) + padder.finalize()
     ciphertext = aes_cbc_cipher.encryptor().update(plaintext)
+    with open(f"{config.ROOT_FOLDER}\\data\ciphertext",'wb') as file:
+        file.write(ciphertext)
     return ciphertext
 
 
@@ -25,20 +27,25 @@ def decrypt_aes_cbc(ciphertext: bytes, key: bytes, iv: bytes):
 
     plaintext = aes_cbc_cipher.decryptor().update(data=ciphertext)
     plaintext = unpadder.update(plaintext) + unpadder.finalize()
+
     return plaintext.decode()
 
 
 if __name__ == "__main__":
     util.make_folder()
-    plaintext = 'Demo encrypt AES128 nvlong nvlong nvlong'
+    # with open(f"{config.ROOT_FOLDER}\\data\plaintext", 'r', encoding='utf8') as file:
+    #     plaintext = file.read()
+    # # print(plaintext)
+    # keys = util.gen_key(size_key_sym=config.SIZE_KEY_SYM, size_iv=config.SIZE_IV)
+    # sk = keys['sk']
+    # iv = keys['iv']
+    # ciphertext = encrypt_aes_cbc(plaintext=plaintext, key=sk, iv=iv)
+    # plaintext = decrypt_aes_cbc(ciphertext=ciphertext,key=sk,iv=iv)
+    with open(f'{config.ROOT_FOLDER}\\data\sk') as sk, open(f'{config.ROOT_FOLDER}\\data\\iv') as iv, open(f'{config.ROOT_FOLDER}\\data\\ciphertext') as ciphertext:
+        sk = sk.read()
+        iv = iv.read()
+        ciphertext = ciphertext.read()
 
-    keys = util.gen_key(size_key_sym=config.SIZE_KEY_SYM, size_iv=config.SIZE_IV)
-    sk = keys['sk']
-    iv = keys['iv']
-    ciphertext = encrypt_aes_cbc(plaintext=plaintext, key=sk, iv=iv)
-
-    plaintext = decrypt_aes_cbc(ciphertext=ciphertext,key=sk,iv=iv)
 
 
-    # print(ciphertext)
-    # print(plaintext)
+
