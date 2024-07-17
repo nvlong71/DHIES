@@ -13,12 +13,14 @@ if __name__ == '__main__':
     #     plaintext = decrypt_aes_cbc(ciphertext=ciphertext,key=sk,iv=iv)
     #     print(plaintext)
 
-    with open(f'{config.ROOT_FOLDER}\\data\\mac_key','rb') as mac_key_file:
-        key = mac_key_file.read()
-    with open(f'{config.ROOT_FOLDER}\\data\\plaintext','r',encoding='utf8') as file:
-        plaintext = file.read()
-    with open(f'{config.ROOT_FOLDER}\\data\\tag','rb') as tag:
-        mac_tag = tag.read()
+    # with open(f'{config.ROOT_FOLDER}\\data\\mac_key','rb') as mac_key_file:
+    #     key = mac_key_file.read()
+    # with open(f'{config.ROOT_FOLDER}\\data\\plaintext','r',encoding='utf8') as file:
+    #     plaintext = file.read()
+    # with open(f'{config.ROOT_FOLDER}\\data\\tag','rb') as tag:
+    #     mac_tag = tag.read()
 
-    verify = validate_tag(plaintext=plaintext, mac_key=key,tag=mac_tag)
-    print(verify)
+    # verify = validate_tag(plaintext=plaintext, mac_key=key,tag=mac_tag)
+    # print(verify)
+
+    gen_key()
