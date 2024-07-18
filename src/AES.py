@@ -15,8 +15,6 @@ def encrypt_aes_cbc(plaintext: str, key: bytes, iv: bytes):
     padder = padding.PKCS7(AES128.block_size).padder()
     plaintext = padder.update(plaintext) + padder.finalize()
     ciphertext = aes_cbc_cipher.encryptor().update(plaintext)
-    with open(f"{config.ROOT_FOLDER}\\data\ciphertext",'wb') as file:
-        file.write(ciphertext)
     return ciphertext
 
 

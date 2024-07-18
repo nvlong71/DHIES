@@ -6,21 +6,22 @@ from util import modular
 import random as rd
 
 def gen_key():
-    with open(f'{config.ROOT_FOLDER}\\data\\p', 'r') as file:
+    with open(f'{config.ROOT_FOLDER}\\storage\\p', 'r') as file:
         p = int(file.read())
-    with open(f'{config.ROOT_FOLDER}\\data\\g', 'r') as file:
+    with open(f'{config.ROOT_FOLDER}\\storage\\g', 'r') as file:
         g = int(file.read())
     v = rd.randint(1, p)
     pk = modular(g, v, p)
-    with (open(f'{config.ROOT_FOLDER}\\data\\pk', 'w') as pk_file,
-          open(f'{config.ROOT_FOLDER}\\data\\sk', 'w') as sk_file):
+    with (open(f'{config.ROOT_FOLDER}\\storage\\pk', 'w') as pk_file,
+          open(f'{config.ROOT_FOLDER}\\storage\\sk', 'w') as sk_file):
         pk_file.write(str(pk))
         sk_file.write(str(v))
     return {
         "pk": modular(g, v, p),
         "sk": v
     }
-
+def decrypt_dhies(em: str, sk: str):
+    pass
 
 if __name__ == '__main__':
     # with open(f'{config.ROOT_FOLDER}\\data\sk', 'rb') as sk, open(f'{config.ROOT_FOLDER}\\data\\iv','rb') as iv, open(

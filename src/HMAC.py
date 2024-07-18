@@ -9,7 +9,7 @@ def create_tag(plaintext: str, mac_key: bytes):
     plaintext = plaintext.encode('utf-8')
     h.update(plaintext)
     mac_tag = h.finalize()
-    with open(f'{config.ROOT_FOLDER}\\data\\tag','wb') as tag_file:
+    with open(f'{config.ROOT_FOLDER}\\storage\\tag','wb') as tag_file:
         tag_file.write(mac_tag)
     return mac_tag
 def validate_tag(plaintext: str, mac_key: bytes, tag: bytes):
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     with open(f'{config.ROOT_FOLDER}\\data\\plaintext','r',encoding='utf8') as file:
         plaintext = file.read()
     # create_tag(plaintext, key)
-    with open(f'{config.ROOT_FOLDER}\\data\\tag','rb') as tag:
+    with open(f'{config.ROOT_FOLDER}\\storage\\tag','rb') as tag:
         mac_tag = tag.read()
 
     verify = validate_tag(plaintext=plaintext, mac_key=key,tag=mac_tag)
