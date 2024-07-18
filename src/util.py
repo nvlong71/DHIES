@@ -35,14 +35,20 @@ def init():
     parameters = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
     p = parameters.parameter_numbers().p
     g = parameters.parameter_numbers().g
-    print(p)
-    print(g)
     with open(f'{config.ROOT_FOLDER}\\data\\p','w') as file:
-        file.write(p)
+        file.write(str(p))
     with open(f'{config.ROOT_FOLDER}\\data\\g','w') as file:
-        file.write(g)
-        
-def create_hash(data: str):
+        file.write(str(g))
+def load_param():
+    with open(f'{config.ROOT_FOLDER}\\data\\p','r') as file:
+        p = int(file.read())
+    with open(f'{config.ROOT_FOLDER}\\data\\g','r') as file:
+        g = int(file.read())
+    return {
+        'p' : p,
+        'g' : g
+    }
+def get_hash(data: str):
     data = data.encode('utf8')
     digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
     digest.update(data)
@@ -50,9 +56,17 @@ def create_hash(data: str):
     hash_hex = hash_bytes.hex()
     return hash_hex
 
+def extract_key(data: str):
+    size_mac_key = config.MAC_KEY // 8
+    size_enc_key = config.SIZE_KEY_ENC // 8
+    mac_key = data[0:config.MAC_KEY // 8]
+    enc_key = data[size_mac_key+ 1:size_mac_key + size_enc_key]
+    return {
+        'mac_key': mac_key,
+        'enc_key': enc_key
+    }
 if __name__ == "__main__":
     data = 'hello world'
-    hash = create_hash(data)
 
-    s = modular(2,6,5)
+    s = modular(3,20,1200)
     print(s)

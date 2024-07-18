@@ -8,16 +8,8 @@ from util import modular
 import random as rd
 
 
-def gen_key():
-    with open(f'{config.ROOT_FOLDER}\\data\\p','r') as file:
-        p = file.read()
-    with open(f'{config.ROOT_FOLDER}\\data\\g','r') as file:
-        g = file.read()
-    v = rd.randint(1,p)
-    return {
-        "pk" : modular(g,v,p),
-        "sk" : v
-    }
+def encrypt():
+    pass
 
 
 if __name__ == '__main__':
@@ -38,7 +30,34 @@ if __name__ == '__main__':
     # with open(f'{config.ROOT_FOLDER}\\data\\plaintext', 'r', encoding='utf8') as file:
     #     plaintext = file.read()
     # create_tag(plaintext, key)
-    util.init()
-    keys = gen_key()
-    print(f'SK : {keys['sk']}')
-    print(f'PK : {keys['pk']}')
+
+    param = util.load_param()
+    p = param['p']
+    g = param['g']
+    u = rd.randint(1, p)
+    with open(f'{config.ROOT_FOLDER}\\data\\message', 'r', encoding='utf8') as message_file, open(f'{config.ROOT_FOLDER}\\data\\pk') as pk_file:
+        message = message_file.read()
+        pk = int(pk_file.read())
+
+
+    print("Alice Encrypt")
+    # tinh khóa bí mật chung x
+    x = modular(pk, u, p)
+    # Tính khóa bí mật tạm thời U
+    U = modular(g, u, p)
+    print(f"Khóa bí mật chung X : {x}")
+    print(f"Khóa bí mật tạm thời U : {U}")
+    temp_hash = util.get_hash(str(x))
+    key_extracted = util.extract_key(temp_hash)
+    mac_key = key_extracted['mac_key']
+    enc_key = key_extracted['enc_key']
+    print(f"MAC KEY : {mac_key}")
+    print(f"ENC KEY : {enc_key}")
+    # print(util.extract_key(temp_hash))
+    # print(bytes.fromhex(temp_hash))
+
+
+
+
+
+
