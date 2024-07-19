@@ -21,7 +21,21 @@ def gen_key():
         "sk": v
     }
 def decrypt_dhies(em: str, sk: str):
-    pass
+    extract_info = em.split('__')
+    U = int(extract_info[0])
+    enc_message = eval(extract_info[1])
+    tag = eval(extract_info[2])
+    sk = int(sk)
+    params = util.load_param()
+    p = params['p']
+    g = params['g']
+    X = util.modular(U,sk)
+    temp_hash = util.get_hash(X)
+    keys = util.extract_key(temp_hash)
+    enc_key = keys['mac_key']
+    mac_key = keys['enc_key']
+    iv = keys['iv']
+    
 
 if __name__ == '__main__':
     # with open(f'{config.ROOT_FOLDER}\\data\sk', 'rb') as sk, open(f'{config.ROOT_FOLDER}\\data\\iv','rb') as iv, open(
@@ -42,7 +56,8 @@ if __name__ == '__main__':
     # verify = validate_tag(plaintext=plaintext, mac_key=key,tag=mac_tag)
     # print(verify)
 
-    util.init()
-    keys = gen_key()
-    print(f'SK : {keys["sk"]}')
-    print(f'PK : {keys["pk"]}')
+    # util.init()
+    # keys = gen_key()
+    # print(f'SK : {keys["sk"]}')
+    # print(f'PK : {keys["pk"]}')
+    decrypt_dhies()
