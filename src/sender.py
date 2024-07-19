@@ -23,9 +23,9 @@ def encrypt_dhies(pk: str, M: str):
     print(f"Khóa bí mật tạm thời U : {U}")
     temp_hash = util.get_hash(str(x))
     key_extracted = util.extract_key(temp_hash)
-    mac_key = bytes.fromhex(key_extracted['mac_key'])
-    enc_key = bytes.fromhex(key_extracted['enc_key'])
-    iv = bytes.fromhex(key_extracted['iv'])
+    mac_key = key_extracted['mac_key']
+    enc_key = key_extracted['enc_key']
+    iv = key_extracted['iv']
     print(f"MAC KEY : {len(mac_key)} bytes")
     print(f"ENC KEY : {len(enc_key)} bytes")
     print(f"IV      : {len(iv)} bytes")
@@ -35,7 +35,7 @@ def encrypt_dhies(pk: str, M: str):
     # print(f"IV :      {iv} bytes")
 
     enc_message = encrypt_aes_cbc(plaintext=message, key=enc_key, iv=iv)
-    tag = create_tag(plaintext=message,mac_key=mac_key)
+    tag = create_tag(data=enc_message, mac_key=mac_key)
 
     print(f'enc_message : {enc_message}')
     print(f'tag: {tag}')
@@ -47,9 +47,9 @@ def encrypt_dhies(pk: str, M: str):
 
 
 if __name__ == '__main__':
-    
+    pass
 
-    encrypt()
+
 
 
 
