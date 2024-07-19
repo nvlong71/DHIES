@@ -64,9 +64,9 @@ def extract_key(data: str):
     enc_key = data[size_mac_key:size_mac_key + size_enc_key]
     iv = data[size_mac_key + size_enc_key:]
     return {
-        'mac_key': mac_key,
-        'enc_key': enc_key,
-        'iv': iv
+        'mac_key': bytes.fromhex(mac_key),
+        'enc_key': bytes.fromhex(enc_key),
+        'iv': bytes.fromhex(iv)
     }
 if __name__ == "__main__":
     data = 'hello world'

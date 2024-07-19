@@ -25,16 +25,25 @@ def decrypt_dhies(em: str, sk: str):
     U = int(extract_info[0])
     enc_message = eval(extract_info[1])
     tag = eval(extract_info[2])
+
     sk = int(sk)
     params = util.load_param()
     p = params['p']
-    g = params['g']
-    X = util.modular(U,sk)
-    temp_hash = util.get_hash(X)
+    x = util.modular(U, sk, p)
+    # print(x)
+    temp_hash = util.get_hash(str(x))
     keys = util.extract_key(temp_hash)
-    enc_key = keys['mac_key']
-    mac_key = keys['enc_key']
+    enc_key = keys['enc_key']
+    mac_key = keys['mac_key']
+    print(enc_message)
+    print(mac_key)
     iv = keys['iv']
+    if not validate_tag(data=enc_message, mac_key=mac_key, tag=tag):
+        return 'BAD'
+    m = decrypt_aes_cbc(enc_message, enc_key, iv)
+    return m
+
+
     
 
 if __name__ == '__main__':
