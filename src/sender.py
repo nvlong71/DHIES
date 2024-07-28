@@ -30,20 +30,11 @@ def encrypt_dhies(pk: str, M: str):
     print(f"ENC KEY : {len(enc_key)} bytes")
     print(f"IV      : {len(iv)} bytes")
 
-    # print(f"MAC KEY : {mac_key} bytes")
-    # print(f"ENC KEY : {str(enc_key)} bytes")
-    # print(f"IV :      {iv} bytes")
-
     enc_message = encrypt_aes_cbc(plaintext=message, key=enc_key, iv=iv)
     tag = create_tag(data=enc_message, mac_key=mac_key)
-
-    print(f'enc_message : {enc_message}')
-    print(f'tag: {tag}')
-
     EM = '__'.join([str(U), str(enc_message), str(tag)])
     with open(f'{config.ROOT_FOLDER}\\storage\\EM', 'w') as em_file:
         em_file.write(EM)
-    print(EM)
 
 
 if __name__ == '__main__':
