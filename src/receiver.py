@@ -4,6 +4,7 @@ import config
 import util
 from util import modular
 import random as rd
+import argparse
 
 def gen_key():
     with open(f'{config.ROOT_FOLDER}\\storage\\p', 'r') as file:
@@ -20,7 +21,10 @@ def gen_key():
         "pk": modular(g, v, p),
         "sk": v
     }
-def decrypt_dhies(em: str, sk: str):
+def decrypt_dhies(em_path: str, sk_path: str):
+    with open(em_path, 'r') as file_em, open(sk_path, 'r') as file_sk:
+        em = file_em.read()
+        sk = file_sk.read()
     extract_info = em.split('__')
     U = int(extract_info[0])
     enc_message = eval(extract_info[1])
@@ -35,38 +39,31 @@ def decrypt_dhies(em: str, sk: str):
     keys = util.extract_key(temp_hash)
     enc_key = keys['enc_key']
     mac_key = keys['mac_key']
-    print(enc_message)
-    print(mac_key)
+    # print(enc_message)
+    # print(mac_key)
+    print('<---- Decrypt ---->')
     iv = keys['iv']
     if not validate_tag(data=enc_message, mac_key=mac_key, tag=tag):
+        print('BAD')
         return 'BAD'
     m = decrypt_aes_cbc(enc_message, enc_key, iv)
+    print(m)
     return m
 
 
     
 
 if __name__ == '__main__':
-    # with open(f'{config.ROOT_FOLDER}\\data\sk', 'rb') as sk, open(f'{config.ROOT_FOLDER}\\data\\iv','rb') as iv, open(
-    #         f'{config.ROOT_FOLDER}\\data\\ciphertext', 'rb') as ciphertext:
-    #     sk = sk.read()
-    #     iv = iv.read()
-    #     ciphertext = ciphertext.read()
-    #     plaintext = decrypt_aes_cbc(ciphertext=ciphertext,key=sk,iv=iv)
-    #     print(plaintext)
 
-    # with open(f'{config.ROOT_FOLDER}\\data\\mac_key','rb') as mac_key_file:
-    #     key = mac_key_file.read()
-    # with open(f'{config.ROOT_FOLDER}\\data\\plaintext','r',encoding='utf8') as file:
-    #     plaintext = file.read()
-    # with open(f'{config.ROOT_FOLDER}\\data\\tag','rb') as tag:
-    #     mac_tag = tag.read()
-
-    # verify = validate_tag(plaintext=plaintext, mac_key=key,tag=mac_tag)
-    # print(verify)
-
-    # util.init()
-    # keys = gen_key()
-    # print(f'SK : {keys["sk"]}')
-    # print(f'PK : {keys["pk"]}')
-    decrypt_dhies()
+    parser = argparse.ArgumentParser(description='Params for receiver')
+    parser.add_argument('--action', help='"gen_key" or "decrypt"')
+    parser.add_argument('--em', help='path to encrypt message from sender')
+    parser.add_argument('--sk', help='path to secret key')
+    args = parser.parse_args()
+    action = args.action
+    if action == 'gen_key':
+        gen_key()
+    elif action == 'decrypt':
+        em = args.em
+        sk = args.sk
+        decrypt_dhies(em_path=em, sk_path=sk)

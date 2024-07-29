@@ -19,7 +19,6 @@ def encrypt_aes_cbc(plaintext: str, key: bytes, iv: bytes):
 
 
 def decrypt_aes_cbc(ciphertext: bytes, key: bytes, iv: bytes):
-    print(f"Decrypt")
     aes_cbc_cipher = Cipher(AES128(key), CBC(iv))
     unpadder = padding.PKCS7(AES128.block_size).unpadder()
 
