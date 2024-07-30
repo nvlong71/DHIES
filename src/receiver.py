@@ -7,6 +7,7 @@ import random as rd
 import argparse
 
 def gen_key():
+    print('<---- gen pk and sk ---->')
     with open(f'{config.ROOT_FOLDER}\\storage\\p', 'r') as file:
         p = int(file.read())
     with open(f'{config.ROOT_FOLDER}\\storage\\g', 'r') as file:
