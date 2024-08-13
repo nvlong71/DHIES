@@ -36,14 +36,14 @@ def init():
     parameters = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
     p = parameters.parameter_numbers().p
     g = parameters.parameter_numbers().g
-    with open(f'{config.ROOT_FOLDER}\\storage\\p','w') as file:
+    with open(f'{config.ROOT_FOLDER}\\config\\p','w') as file:
         file.write(str(p))
-    with open(f'{config.ROOT_FOLDER}\\storage\\g','w') as file:
+    with open(f'{config.ROOT_FOLDER}\\config\\g','w') as file:
         file.write(str(g))
 def load_param():
-    with open(f'{config.ROOT_FOLDER}\\storage\\p','r') as file:
+    with open(f'{config.ROOT_FOLDER}\\config\\p','r') as file:
         p = int(file.read())
-    with open(f'{config.ROOT_FOLDER}\\storage\\g','r') as file:
+    with open(f'{config.ROOT_FOLDER}\\config\\g','r') as file:
         g = int(file.read())
     return {
         'p' : p,
@@ -69,7 +69,4 @@ def extract_key(data: str):
         'iv': bytes.fromhex(iv)
     }
 if __name__ == "__main__":
-    data = 'hello world'
-
-    s = modular(3,20,1200)
-    print(s)
+    init()
