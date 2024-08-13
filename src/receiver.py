@@ -5,14 +5,13 @@ import util
 from util import modular
 import random as rd
 import argparse
-
+import config
 def gen_key():
     print('<---- gen pk and sk ---->')
-    with open(f'{config.ROOT_FOLDER}\\storage\\p', 'r') as file:
-        p = int(file.read())
-    with open(f'{config.ROOT_FOLDER}\\storage\\g', 'r') as file:
-        g = int(file.read())
-    v = rd.randint(1, p)
+    p = config.p
+    g = config.g
+    q = config.q
+    v = rd.randint(1, q)
     pk = modular(g, v, p)
     with (open(f'{config.ROOT_FOLDER}\\storage\\pk', 'w') as pk_file,
           open(f'{config.ROOT_FOLDER}\\storage\\sk', 'w') as sk_file):
@@ -32,8 +31,7 @@ def decrypt_dhies(em_path: str, sk_path: str):
     tag = eval(extract_info[2])
 
     sk = int(sk)
-    params = util.load_param()
-    p = params['p']
+    p = config.p
     x = util.modular(U, sk, p)
     # print(x)
     temp_hash = util.get_hash(str(x))

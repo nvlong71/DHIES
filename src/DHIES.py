@@ -5,8 +5,6 @@ import config
 
 if __name__ == '__main__':
 
-    print("Init p & g")
-    util.init()
 
     print("Bob gen key")
     receiver.gen_key()

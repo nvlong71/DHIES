@@ -11,10 +11,11 @@ import argparse
 
 def encrypt_dhies(pk_path: str, m_path: str):
 
-    param = util.load_param()
-    p = param['p']
-    g = param['g']
-    u = rd.randint(1, p)
+
+    p = config.p
+    g = config.g
+    q = config.q
+    u = rd.randint(1, q)
     with open(pk_path,'r') as pk_file, open(m_path,'r') as m_file:
         M = m_file.read()
         pk = pk_file.read()
