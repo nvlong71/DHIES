@@ -6,15 +6,19 @@ from util import modular
 import random as rd
 import argparse
 import config
+import os
 def gen_key():
     print('<---- gen pk and sk ---->')
     p = config.p
     g = config.g
     q = config.q
     v = rd.randint(1, q-1)
-    pk = modular(g, v, p)D
-    with (open(f'{config.ROOT_FOLDER}\\storage\\pk', 'w') as pk_file,
-          open(f'{config.ROOT_FOLDER}\\storage\\sk', 'w') as sk_file):
+    pk = modular(g, v, p)
+    path_pk = os.path.join(config.ROOT_FOLDER,'storage/pk')
+    path_sk = os.path.join(config.ROOT_FOLDER,'storage/sk')
+    
+    with (open(path_pk, 'w') as pk_file,
+          open(path_sk, 'w') as sk_file):
         pk_file.write(str(pk))
         sk_file.write(str(v))
     return {
@@ -58,6 +62,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     action = args.action
     if action == 'gen_key':
+        util.make_folder()
         gen_key()
     elif action == 'decrypt':
         em = args.em

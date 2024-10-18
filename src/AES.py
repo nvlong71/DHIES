@@ -22,7 +22,7 @@ def decrypt_aes_cbc(ciphertext: bytes, key: bytes, iv: bytes):
     aes_cbc_cipher = Cipher(AES128(key), CBC(iv))
     unpadder = padding.PKCS7(AES128.block_size).unpadder()
 
-    plaintext = aes_cbc_cipher.decryptor().update(data=ciphertext)
+    plaintext = aes_cbc_cipher.decryptor().update(ciphertext)
     plaintext = unpadder.update(plaintext) + unpadder.finalize()
 
     return plaintext.decode()

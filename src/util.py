@@ -6,8 +6,8 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import dh
 def make_folder():
-    Path(f'{config.ROOT_FOLDER}\\data').mkdir(exist_ok=True)
-    Path(f'{config.ROOT_FOLDER}\\storage').mkdir(exist_ok=True)
+    Path(os.path.join(config.ROOT_FOLDER,'data')).mkdir(exist_ok=True)
+    Path(os.path.join(config.ROOT_FOLDER,'storage')).mkdir(exist_ok=True)
 def gen_key(size_key_sym: int, size_iv: int):
     sk = os.urandom(size_key_sym//8)
     iv = os.urandom(size_key_sym//8)
@@ -32,18 +32,13 @@ def modular(base, exponent, modulus):
         base = (base * base) % modulus
     return result
 
-def init():
-    parameters = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
-    p = parameters.parameter_numbers().p
-    g = parameters.parameter_numbers().g
-    with open(f'{config.ROOT_FOLDER}\\config\\p','w') as file:
-        file.write(str(p))
-    with open(f'{config.ROOT_FOLDER}\\config\\g','w') as file:
-        file.write(str(g))
+
 def load_param():
-    with open(f'{config.ROOT_FOLDER}\\config\\p','r') as file:
+    path_p = os.path.join(config.ROOT_FOLDER,'config/p')
+    with open(path_p) as file:
         p = int(file.read())
-    with open(f'{config.ROOT_FOLDER}\\config\\g','r') as file:
+    path_g = os.path.join(config.ROOT_FOLDER,'config/g')
+    with open(path_g,'r') as file:
         g = int(file.read())
     return {
         'p' : p,

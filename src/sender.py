@@ -32,7 +32,8 @@ def encrypt_dhies(pk_path: str, m_path: str):
     tag = create_tag(data=enc_message, mac_key=mac_key)
     EM = '__'.join([str(U), str(enc_message), str(tag)])
     print('<---- Encrypt Message ---->\n' + EM)
-    with open(f'{config.ROOT_FOLDER}\\storage\\EM', 'w') as em_file:
+    path_em = os.path.join(config.ROOT_FOLDER,'storage/EM')
+    with open(path_em, 'w') as em_file:
         em_file.write(EM)
 
 
