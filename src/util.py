@@ -68,5 +68,6 @@ def extract_key(data: str):
         'enc_key': bytes.fromhex(enc_key),
         'iv': bytes.fromhex(iv)
     }
+
 if __name__ == "__main__":
     init()

@@ -11,8 +11,8 @@ def gen_key():
     p = config.p
     g = config.g
     q = config.q
-    v = rd.randint(1, q)
-    pk = modular(g, v, p)
+    v = rd.randint(1, q-1)
+    pk = modular(g, v, p)D
     with (open(f'{config.ROOT_FOLDER}\\storage\\pk', 'w') as pk_file,
           open(f'{config.ROOT_FOLDER}\\storage\\sk', 'w') as sk_file):
         pk_file.write(str(pk))
@@ -33,13 +33,10 @@ def decrypt_dhies(em_path: str, sk_path: str):
     sk = int(sk)
     p = config.p
     x = util.modular(U, sk, p)
-    # print(x)
     temp_hash = util.get_hash(str(x))
     keys = util.extract_key(temp_hash)
     enc_key = keys['enc_key']
     mac_key = keys['mac_key']
-    # print(enc_message)
-    # print(mac_key)
     print('<---- Decrypt ---->')
     iv = keys['iv']
     if not validate_tag(data=enc_message, mac_key=mac_key, tag=tag):

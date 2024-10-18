@@ -9,8 +9,6 @@ def create_tag(data: bytes, mac_key: bytes):
     h = hmac.HMAC(mac_key, hash_func)
     h.update(data)
     mac_tag = h.finalize()
-    # with open(f'{config.ROOT_FOLDER}\\storage\\tag', 'wb') as tag_file:
-    #     tag_file.write(mac_tag)
     return mac_tag
 
 
