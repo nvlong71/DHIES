@@ -8,6 +8,8 @@ from util import modular
 import random as rd
 import argparse
 
+def gen_iv():
+    return os.getrandom(16)
 
 def encrypt_dhies(pk_path: str, m_path: str):
     p = config.p
@@ -27,10 +29,12 @@ def encrypt_dhies(pk_path: str, m_path: str):
     key_extracted = util.extract_key(temp_hash)
     mac_key = key_extracted['mac_key']
     enc_key = key_extracted['enc_key']
-    iv = key_extracted['iv']
+
+    # iv = key_extracted['iv']
+    iv = gen_iv()
     enc_message = encrypt_aes_cbc(plaintext=message, key=enc_key, iv=iv)
     tag = create_tag(data=enc_message, mac_key=mac_key)
-    EM = '__'.join([str(U), str(enc_message), str(tag)])
+    EM = '__'.join([str(U), str(enc_message), str(tag),str(iv)])
     print('<---- Encrypt Message ---->\n' + EM)
     path_em = os.path.join(config.ROOT_FOLDER,'storage/EM')
     with open(path_em, 'w') as em_file:

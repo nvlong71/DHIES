@@ -33,7 +33,7 @@ def decrypt_dhies(em_path: str, sk_path: str):
     U = int(extract_info[0])
     enc_message = eval(extract_info[1])
     tag = eval(extract_info[2])
-
+    iv = eval(extract_info[3])
     sk = int(sk)
     p = config.p
     x = util.modular(U, sk, p)
@@ -42,7 +42,7 @@ def decrypt_dhies(em_path: str, sk_path: str):
     enc_key = keys['enc_key']
     mac_key = keys['mac_key']
     print('<---- Decrypt ---->')
-    iv = keys['iv']
+
     if not validate_tag(data=enc_message, mac_key=mac_key, tag=tag):
         print('BAD')
         return 'BAD'
