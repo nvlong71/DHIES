@@ -7,6 +7,7 @@ import random as rd
 import argparse
 import config
 import os
+
 def gen_key():
     print('<---- gen pk and sk ---->')
     p = config.p
@@ -14,22 +15,24 @@ def gen_key():
     q = config.q
     v = rd.randint(1, q-1)
     pk = modular(g, v, p)
-    path_pk = os.path.join(config.ROOT_FOLDER,'storage/pk')
-    path_sk = os.path.join(config.ROOT_FOLDER,'storage/sk')
+    path_pk = os.path.join(config.ROOT_FOLDER, 'storage/pk')
+    path_sk = os.path.join(config.ROOT_FOLDER, 'storage/sk')
     
-    with (open(path_pk, 'w') as pk_file,
-          open(path_sk, 'w') as sk_file):
+    with open(path_pk, 'w') as pk_file, open(path_sk, 'w') as sk_file:
         pk_file.write(str(pk))
         sk_file.write(str(v))
+    
     return {
-        "pk": modular(g, v, p),
+        "pk": pk,  
         "sk": v
     }
+
+
 def decrypt_dhies(em_path: str, sk_path: str):
     with open(em_path, 'r') as file_em, open(sk_path, 'r') as file_sk:
         em = file_em.read()
         sk = file_sk.read()
-    extract_info = em.split('__')
+    extract_info = em.split('_$_$')
     U = int(extract_info[0])
     enc_message = eval(extract_info[1])
     tag = eval(extract_info[2])
@@ -67,4 +70,4 @@ if __name__ == '__main__':
     elif action == 'decrypt':
         em = args.em
         sk = args.sk
-        decrypt_dhies(em_path=em, sk_path=sk)
+        decrypt_dhies(em_path=em, sk_path=sk

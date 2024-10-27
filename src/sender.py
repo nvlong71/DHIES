@@ -34,7 +34,8 @@ def encrypt_dhies(pk_path: str, m_path: str):
     iv = gen_iv()
     enc_message = encrypt_aes_cbc(plaintext=message, key=enc_key, iv=iv)
     tag = create_tag(data=enc_message, mac_key=mac_key)
-    EM = '__'.join([str(U), str(enc_message), str(tag),str(iv)])
+    EM = '_$_$'.join([str(U), str(enc_message), str(tag),str(iv)])
+    # EM = f'''{str(U)}__{str(enc_message)}__{str(tag)}__{str(iv)}'''
     print('<---- Encrypt Message ---->\n' + EM)
     path_em = os.path.join(config.ROOT_FOLDER,'storage/EM')
     with open(path_em, 'w') as em_file:
