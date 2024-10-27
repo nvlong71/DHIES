@@ -70,4 +70,4 @@ if __name__ == '__main__':
     elif action == 'decrypt':
         em = args.em
         sk = args.sk
-        decrypt_dhies(em_path=em, sk_path=sk
+        decrypt_dhies(em_path=em, sk_path=sk)
