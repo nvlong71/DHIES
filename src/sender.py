@@ -42,6 +42,7 @@ def encrypt_dhies(pk_path: str, m_path: str):
         pk = pk_file.read()
         u = sk_file.read()
     message = M
+    print(pk)
     pk = int(pk)
     u = int(u)
     # tinh khóa bí mật chung x

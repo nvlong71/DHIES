@@ -1,13 +1,11 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from sender import encrypt_dhies, gen_key
 
 # Define encryption, decryption, and key generation functions
-def encrypt_dhies(m_path, pk_path):
-    print(f"Encrypting {m_path} with public key {pk_path}")
 
 def generate_key():
-    # Replace with your actual key generation logic
-    print("Generating keys...")
+    gen_key()
     messagebox.showinfo("Success", "Key generation complete")
 
 # Function to handle "Encrypt" button click
@@ -17,7 +15,9 @@ def start_encryption():
     if not m_path or not pk_path:
         messagebox.showerror("Error", "Please select both files for encryption")
     else:
-        encrypt_dhies(m_path, pk_path)
+        print(m_path)
+        print(pk_path)
+        encrypt_dhies(m_path=m_path, pk_path=pk_path)
         messagebox.showinfo("Success", "Encryption complete")
 
 # Function to handle "Decrypt" button click

@@ -51,7 +51,8 @@ def decrypt_dhies(em_path: str, sk_path: str):
         print('BAD')
         return 'BAD'
     m = decrypt_aes_cbc(enc_message, enc_key, iv)
-    print(m)
+    with open(os.path.join(config.STORAGE_RECEIVER,'m_decrypt'),'w') as decrypt_m:
+        decrypt_m.write(m)
     return m
 
 
