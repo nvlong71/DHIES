@@ -4,6 +4,9 @@ SIZE_KEY_ENC = 128
 SIZE_IV = 128
 MAC_KEY = 256
 ROOT_FOLDER = os.getcwd()
+STORAGE_RECEIVER = f'{ROOT_FOLDER}/storage/receiver'
+STORAGE_SENDER = f'{ROOT_FOLDER}/storage/sender'
+
 SIZE_TAG = 256
 
 #2048-bit MODP Group with 224-bit Prime Order Subgroup

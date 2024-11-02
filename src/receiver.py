@@ -8,16 +8,17 @@ import argparse
 import config
 import os
 
+
+
 def gen_key():
-    print('<---- gen pk and sk ---->')
+    print('<---- receiver gen ephemeral_pk and sk ---->')
     p = config.p
     g = config.g
     q = config.q
     v = rd.randint(1, q-1)
     pk = modular(g, v, p)
-    path_pk = os.path.join(config.ROOT_FOLDER, 'storage/pk')
-    path_sk = os.path.join(config.ROOT_FOLDER, 'storage/sk')
-    
+    path_pk = os.path.join(config.STORAGE_SENDER, 'ephemeral_pk')
+    path_sk = os.path.join(config.STORAGE_RECEIVER,'sk')
     with open(path_pk, 'w') as pk_file, open(path_sk, 'w') as sk_file:
         pk_file.write(str(pk))
         sk_file.write(str(v))
