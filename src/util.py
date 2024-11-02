@@ -8,6 +8,9 @@ from cryptography.hazmat.primitives.asymmetric import dh
 def make_folder():
     Path(os.path.join(config.ROOT_FOLDER,'data')).mkdir(exist_ok=True)
     Path(os.path.join(config.ROOT_FOLDER,'storage')).mkdir(exist_ok=True)
+    Path(os.path.join(config.STORAGE_RECEIVER)).mkdir(exist_ok=True)
+    Path(os.path.join(config.STORAGE_SENDER)).mkdir(exist_ok=True)
+    
 def gen_key(size_key_sym: int, size_iv: int):
     sk = os.urandom(size_key_sym//8)
     iv = os.urandom(size_key_sym//8)
