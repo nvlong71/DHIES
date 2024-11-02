@@ -1,15 +1,12 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from receiver import decrypt_dhies, gen_key
 
 # Define encryption, decryption, and key generation functions
 
-def decrypt_dhies(em_path, sk_path):
-    print(f"Decrypting {em_path} with secret key {sk_path}")
 
-def generate_key():
-    # Replace with your actual key generation logic
-    print("Generating keys...")
-    messagebox.showinfo("Success", "Key generation complete")
+
+
 
 def start_decryption():
     em_path = em_entry.get()
@@ -17,8 +14,12 @@ def start_decryption():
     if not em_path or not sk_path:
         messagebox.showerror("Error", "Please select both files for decryption")
     else:
-        decrypt_dhies(em_path, sk_path)
+        decrypt_dhies(em_path=em_path, sk_path=sk_path)
         messagebox.showinfo("Success", "Decryption complete")
+
+def start_gen_key():
+    gen_key()
+    messagebox.showinfo("Success", "Gen key complete")
 
 # Update the form based on selected action (Encrypt/Decrypt/Gen Key)
 def update_form():
@@ -27,7 +28,8 @@ def update_form():
         action_button.config(text="Decrypt", command=start_decryption)
     else:  # Gen Key selected
         decrypt_frame.grid_forget()
-        action_button.config(text="Generate Key", command=generate_key)
+        action_button.config(text="Generate Key", command=start_gen_key)
+        
 
 # Create the main GUI window
 root = tk.Tk()
