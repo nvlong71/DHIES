@@ -37,7 +37,7 @@ def update_form():
 # Create the main GUI window
 root = tk.Tk()
 root.title("DHIES Decryption")
-root.geometry("500x300")
+root.geometry("650x300")
 root.configure(bg="#f0f8ff")  # Light blue background
 
 # Apply a modern theme to `ttk` widgets
