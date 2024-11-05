@@ -14,8 +14,11 @@ def start_decryption():
     if not em_path or not sk_path:
         messagebox.showerror("Error", "Please select both files for decryption")
     else:
-        decrypt_dhies(em_path=em_path, sk_path=sk_path)
-        messagebox.showinfo("Success", "Decryption complete")
+        m = decrypt_dhies(em_path=em_path, sk_path=sk_path)
+        if m == 'BAD' : 
+            messagebox.showerror("Error", "Validate Failed")
+        else:
+            messagebox.showinfo("Success", "Decryption complete")
 
 def start_gen_key():
     gen_key()

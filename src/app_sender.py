@@ -12,12 +12,13 @@ def generate_key():
 def start_encryption():
     m_path = m_entry.get()
     pk_path = pk_entry.get()
+    sk_path = sk_entry.get()
     if not m_path or not pk_path:
         messagebox.showerror("Error", "Please select both files for encryption")
     else:
         print(m_path)
         print(pk_path)
-        encrypt_dhies(m_path=m_path, pk_path=pk_path)
+        encrypt_dhies(m_path=m_path, pk_path=pk_path, sk_path=sk_path)
         messagebox.showinfo("Success", "Encryption complete")
 
 # Function to handle "Decrypt" button click
@@ -33,7 +34,7 @@ def update_form():
 # Create the main GUI window
 root = tk.Tk()
 root.title("DHIES Encryption")
-root.geometry("500x300")
+root.geometry("650x300")
 root.configure(bg="#f0f8ff")  # Light blue background
 
 # Apply a modern theme to `ttk` widgets
@@ -66,19 +67,26 @@ gen_key_radio.configure(style="Custom.TRadiobutton")
 
 # Frame for encryption parameters
 encrypt_frame = ttk.LabelFrame(root, text="Encryption Parameters", padding="10", style="Custom.TLabelframe")
-m_label = tk.Label(encrypt_frame, text="Plaintext Path:", bg=bg_color)
+m_label = tk.Label(encrypt_frame, text="Plaintext", bg=bg_color)
 m_label.grid(row=0, column=0, sticky="e", padx=5, pady=5)
 m_entry = ttk.Entry(encrypt_frame, width=40)
 m_entry.grid(row=0, column=1, padx=5, pady=5)
 m_browse = ttk.Button(encrypt_frame, text="Browse", command=lambda: m_entry.insert(0, filedialog.askopenfilename()), style="Custom.TButton")
 m_browse.grid(row=0, column=2, padx=5, pady=5)
 
-pk_label = tk.Label(encrypt_frame, text="Public Key Path:", bg=bg_color)
+pk_label = tk.Label(encrypt_frame, text="Ephermal Public Key ", bg=bg_color)
 pk_label.grid(row=1, column=0, sticky="e", padx=5, pady=5)
 pk_entry = ttk.Entry(encrypt_frame, width=40)
 pk_entry.grid(row=1, column=1, padx=5, pady=5)
 pk_browse = ttk.Button(encrypt_frame, text="Browse", command=lambda: pk_entry.insert(0, filedialog.askopenfilename()), style="Custom.TButton")
 pk_browse.grid(row=1, column=2, padx=5, pady=5)
+
+sk_label = tk.Label(encrypt_frame, text="Secret Key", bg=bg_color)
+sk_label.grid(row=2, column=0, sticky="e", padx=5, pady=5)
+sk_entry = ttk.Entry(encrypt_frame, width=40)
+sk_entry.grid(row=2, column=1, padx=5, pady=5)
+sk_browse = ttk.Button(encrypt_frame, text="Browse", command=lambda: sk_entry.insert(0, filedialog.askopenfilename()), style="Custom.TButton")
+sk_browse.grid(row=2, column=2, padx=5, pady=5)
 
 # Main action button
 action_button = ttk.Button(root, text="Encrypt", command=start_encryption, style="Custom.TButton")

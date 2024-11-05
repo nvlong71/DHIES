@@ -17,7 +17,7 @@ def gen_key():
     q = config.q
     v = rd.randint(1, q-1)
     pk = modular(g, v, p)
-    path_pk = os.path.join(config.STORAGE_SENDER, 'ephemeral_pk')
+    path_pk = os.path.join(config.STORAGE_SENDER, 'ephemeral_pk_of_receiver')
     path_sk = os.path.join(config.STORAGE_RECEIVER,'sk')
     with open(path_pk, 'w') as pk_file, open(path_sk, 'w') as sk_file:
         pk_file.write(str(pk))
