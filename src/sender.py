@@ -12,37 +12,33 @@ def gen_iv():
     return os.getrandom(16)
 
 def gen_key():
-    print('<---- sender ephemeral_pk and sk ---->')
+    print('<---- sender gen ephemeral_pk and sk ---->')
     p = config.p
     g = config.g
     q = config.q
     v = rd.randint(1, q-1)
     pk = modular(g, v, p)
     path_sk = os.path.join(config.STORAGE_SENDER,'sk')
-    
     with open(path_sk, 'w') as sk_file:
         sk_file.write(str(v))
-    
     return {
         "pk": pk,  
         "sk": v
     }
 
 
-def encrypt_dhies(pk_path: str, m_path: str):
+def encrypt_dhies(pk_path: str, m_path: str, sk_path: str):
     p = config.p
     g = config.g
     q = config.q
-    # u = rd.randint(1, q-1)
 
     with open(pk_path,'r') as pk_file, \
             open(m_path,'r') as m_file , \
-            open(os.path.join(f'{config.STORAGE_SENDER}/sk'), 'r') as sk_file:
+            open(sk_path, 'r') as sk_file:
         M = m_file.read()
         pk = pk_file.read()
         u = sk_file.read()
     message = M
-    print(pk)
     pk = int(pk)
     u = int(u)
     # tinh khóa bí mật chung x
@@ -71,6 +67,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Param for sender')
     parser.add_argument('--m', help='path to plaintext to encrypt')
     parser.add_argument('--pk', help='path to ephermal public key')
+    parser.add_argument('--sk', help='path to secret key')
+
     parser.add_argument('--action', help='"gen_key" or "encrypt"')
     args = parser.parse_args()
     action = args.action
@@ -80,7 +78,8 @@ if __name__ == '__main__':
     else:
         em = args.m
         pk = args.pk
-        encrypt_dhies(m_path=em, pk_path=pk)
+        sk = args.sk
+        encrypt_dhies(m_path=em, pk_path=pk, sk_path=sk)
 
 
 
