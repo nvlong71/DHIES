@@ -56,7 +56,7 @@ def encrypt_dhies(pk_path: str, m_path: str, sk_path: str):
     tag = create_tag(data=enc_message, mac_key=mac_key)
     EM = '_$_$'.join([str(U), str(enc_message), str(tag),str(iv)])
     # EM = f'''{str(U)}__{str(enc_message)}__{str(tag)}__{str(iv)}'''
-    print('<---- Encrypt Message ---->\n' + EM)
+    # print('<---- Encrypt Message ---->\n' + EM)
     
     path_em = os.path.join(config.STORAGE_RECEIVER,'EM')
     with open(path_em, 'w') as em_file:
